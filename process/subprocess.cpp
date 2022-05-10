@@ -2,6 +2,7 @@
 #include <string>
 #include <array>
 #include <memory>
+#include <sstream>
 
 using namespace std;
 
@@ -9,15 +10,15 @@ class subprocess {
 public:
     static std::string call(const std::string& cmd) {
         std::array<char, 128> buffer{};
-        std::string result;
+        std::stringstream ss;
         std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd.c_str(), "r"), pclose);
         if (!pipe) {
             throw std::runtime_error("popen() failed!");
         }
         while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
-            result += buffer.data();
+            ss << buffer.data();
         }
-        return result;
+        return ss.str();
     }
 };
 

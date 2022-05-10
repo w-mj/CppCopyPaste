@@ -4,3 +4,5 @@ project(CppSnipaste)
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(process)
+add_subdirectory(template)
+add_subdirectory(float)
